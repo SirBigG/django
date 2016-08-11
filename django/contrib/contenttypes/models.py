@@ -84,7 +84,7 @@ class ContentType(models.Model):
         unique_together = (('app_label', 'model'),)
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     @property
     def name(self):
