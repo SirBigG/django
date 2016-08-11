@@ -71,8 +71,8 @@ class ContentTypeManager(models.Manager):
         self.__class__._cache.setdefault(using, {})[key] = ct
         self.__class__._cache.setdefault(using, {})[ct.id] = ct
 
+
 class ContentType(models.Model):
-    name = models.CharField(max_length=100)
     app_label = models.CharField(max_length=100)
     model = models.CharField(_('python model class name'), max_length=100)
     objects = ContentTypeManager()
@@ -87,8 +87,15 @@ class ContentType(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def name(self):
+        model = self.model_class()
+        if not model:
+            return self.model
+        return smart_unicode(model._meta.verbose_name)
+
     def model_class(self):
-        "Returns the Python model class for this type of content."
+        """Returns the Python model class for this type of content."""
         from django.db import models
         return models.get_model(self.app_label, self.model)
 
