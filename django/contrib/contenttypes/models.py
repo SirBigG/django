@@ -81,7 +81,6 @@ class ContentType(models.Model):
         verbose_name = _('content type')
         verbose_name_plural = _('content types')
         db_table = 'django_content_type'
-        ordering = ('name',)
         unique_together = (('app_label', 'model'),)
 
     def __unicode__(self):
