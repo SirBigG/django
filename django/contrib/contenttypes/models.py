@@ -93,6 +93,11 @@ class ContentType(models.Model):
             return self.model
         return smart_unicode(model._meta.verbose_name)
 
+    @name.setter
+    def name(self, value):
+        """For old migrations."""
+        self.__name = value
+
     def model_class(self):
         """Returns the Python model class for this type of content."""
         from django.db import models
